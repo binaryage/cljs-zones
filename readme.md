@@ -10,7 +10,7 @@ Magical `binding` which survives async calls (with the help of `bound-fn`).
 ### Documentation
 
 
-You can test it in your browser [with klipse](http://app.klipse.tech/?cljs_in.gist=viebel/ee6f2e662c82edb7070068f1186c9e4d&external-libs=[https://raw.githubusercontent.com/viebel/cljs-zones/master/src/lib]). You will have to open the console to see all the print outputs.
+You can test it in your browser [with klipse](http://app.klipse.tech/?cljs_in.gist=viebel/ee6f2e662c82edb7070068f1186c9e4d&external-libs=[https://raw.githubusercontent.com/viebel/cljs-zones/master/src/lib]).
 
 If you want to test it locally, just do the following:
 
