@@ -156,3 +156,52 @@
     (async done
       (test3)
       (js/setTimeout done 1000))))
+
+; -- T4 ---------------------------------------------------------------------------------------------------------------------
+
+(defn test4-async-fn1 []
+  (print-default-zone "test4-async-fn1: before set!")
+  (is (= (get s) 1))
+  (zones/set! s 100)
+  (print-default-zone "test4-async-fn1: after set!")
+  (is (= (get s) 100)))
+
+(defn test4-async-fn2 []
+  (print-default-zone "test4-async-fn2")
+  (is (= (get s) 100)))
+
+(defn test4-async-fn3 []
+  (print-default-zone "test4-async-fn3: before set!")
+  (is (= (get s) 100))
+  (zones/set! s 1001)
+  (print-default-zone "test4-async-fn3: after set!")
+  (is (= (get s) 1001)))
+
+(defn test4-async-fn4 []
+  (print-default-zone "test4-async-fn4")
+  (is (= (get s) 1001)))
+
+(defn test4-async-fn5 []
+  (print-default-zone "test4-async-fn5")
+  (is (= (get s) 1001)))
+
+(defn test4 []
+  (is (= (get s) nil))
+  (binding [s 1]
+    (print-default-zone "test4: inside binding-1")
+    (is (= (get s) 1))
+    (js/setTimeout (bound-fn* test4-async-fn1) 200)
+    (js/setTimeout (bound-fn* test4-async-fn2) 250)
+    (js/setTimeout (bound-fn* test4-async-fn4) 400)
+    (binding [x 1000]
+      (print-default-zone "test4: inside binding-1-2")
+      (js/setTimeout (bound-fn* test4-async-fn3) 300)
+      (js/setTimeout (bound-fn* test4-async-fn5) 600))
+    (is (= (get s) 1)))
+  (is (= (get s) nil)))
+
+(deftest T4
+  (testing "two nested binding frames with mixed async calls and set! on shared var from binding-1"
+    (async done
+      (test4)
+      (js/setTimeout done 1000))))

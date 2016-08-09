@@ -33,7 +33,7 @@
   `(goog.object/get ~zone ~(munge-name name)))
 
 (defmacro zone-set! [zone name val]
-  `(goog.object/set ~zone ~(munge-name name) ~val))
+  `(zones.core/prototype-aware-set! ~zone ~(munge-name name) ~val))
 
 (defmacro zone-bound-fn* [zone f]
   `(let [lexical-zone# ~zone]
