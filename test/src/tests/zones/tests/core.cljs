@@ -1,12 +1,8 @@
 (ns zones.tests.core
   (:refer-clojure :exclude [binding get set])
   (:require [cljs.test :refer-macros [async deftest testing is use-fixtures]]
-            [zones.core :as zones :refer-macros [binding get set bound-fn* bound-fn]]))
-
-; -- helpers ----------------------------------------------------------------------------------------------------------------
-
-(defn print-default-zone [location]
-  (print (str location ": ") zones/default-zone))
+            [zones.core :as zones :refer-macros [binding get set bound-fn* bound-fn]]
+            [zones.tests.helpers :refer [print-default-zone]]))
 
 ; -- T0 ---------------------------------------------------------------------------------------------------------------------
 
