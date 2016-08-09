@@ -1,11 +1,17 @@
 (ns zones.core
-  (:refer-clojure :exclude [binding bound-fn bound-fn* get])
-  (:require [environ.core :refer [env]]))
+  (:refer-clojure :exclude [binding bound-fn bound-fn* get]))
 
-(def ES2015? (boolean (env :cljs-zones-es2015)))
+(defn read-config []
+  (if cljs.env/*compiler*
+    (get-in @cljs.env/*compiler* [:options :external-config :zones/config])))                                                 ; https://github.com/bhauman/lein-figwheel/commit/80f7306bf5e6bd1330287a6f3cc259ff645d899b
 
-(defmacro get-compilation-mode []
-  (if ES2015? "ES2015" "ES3"))
+(def config (read-config))
+
+(defn config-compilation-mode []
+  (keyword (or (:compilation-mode config) :ES3)))
+
+(defn compile-as-ES2015? []
+  (= (config-compilation-mode) :ES2015))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
@@ -38,7 +44,7 @@
   `(aget ~o "__proto__"))
 
 (defn gen-get-prototype [o]
-  (if ES2015?
+  (if (compile-as-ES2015?)
     (gen-get-prototype-ES2015 o)
     (gen-get-prototype-ES3 o)))
 
@@ -51,18 +57,23 @@
      obj#))
 
 (defn gen-create-object [proto bindings]
-  (if ES2015?
+  (if (compile-as-ES2015?)
     (gen-create-object-ES2015 proto bindings)
     (gen-create-object-ES3 proto bindings)))
+
+; -- aux macros -------------------------------------------------------------------------------------------------------------
+
+(defmacro get-compilation-mode []
+  (config-compilation-mode))
 
 (defmacro get-prototype [o]
   (gen-get-prototype o))
 
-; -- general zone operations ------------------------------------------------------------------------------------------------
-
 (defmacro make-zone
   ([] (gen-bindings-obj []))
   ([bindings] (gen-bindings-obj bindings)))
+
+; -- general zone operations ------------------------------------------------------------------------------------------------
 
 (defmacro zone-binding [zone bindings & body]
   `(let [prev-zone# ~zone
@@ -92,7 +103,7 @@
 (defmacro zone-bound-fn [zone & fntail]
   `(zone-bound-fn* ~zone (fn ~@fntail)))
 
-; -- specific default-zone operations ---------------------------------------------------------------------------------------
+; -- specialized default-zone operations ------------------------------------------------------------------------------------
 
 (defmacro binding [bindings & body]
   `(zone-binding ~'zones.core/default-zone ~bindings ~@body))

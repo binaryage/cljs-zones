@@ -9,14 +9,12 @@
         :url  "https://github.com/binaryage/cljs-zones"}
 
   :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
-                 [org.clojure/clojurescript "1.9.89" :scope "provided"]
-                 [environ "1.1.0"]]
+                 [org.clojure/clojurescript "1.9.89" :scope "provided"]]
 
   :clean-targets ^{:protect false} ["target"
                                     "test/resources/_compiled"]
 
   :plugins [[lein-cljsbuild "1.1.3"]
-            [lein-environ "1.1.0"]
             [lein-shell "0.5.0"]]
 
   :source-paths ["src/lib"]
@@ -32,7 +30,7 @@
                                                            :output-dir    "target/devel"
                                                            :optimizations :none}}}}}
 
-             :es2015 {:env {:cljs-zones-es2015 "1"}}
+             :es2015 {:cljsbuild {:builds {:tests {:compiler {:external-config {:zones/config {:compilation-mode :ES2015}}}}}}}
 
              :testing
                      {:cljsbuild {:builds {:tests
