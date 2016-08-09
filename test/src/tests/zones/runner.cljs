@@ -2,6 +2,8 @@
   (:require [cljs.test :as test :refer-macros [run-tests] :refer [report]]
             [zones.tests.core]))
 
+(enable-console-print!)
+
 ; -- entry point ------------------------------------------------------------------------------------------------------------
 
 (defmethod report [:cljs.test/default :end-run-tests] [m]

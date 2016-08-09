@@ -39,24 +39,39 @@
                                                    :asset-path    "_compiled/tests"
                                                    :main          zones.main
                                                    :optimizations :none}}}}}
+
+             :testing-advanced
+             {:cljsbuild {:builds {:tests
+                                   {:source-paths ["src/lib"
+                                                   "test/src/tests"]
+                                    :compiler     {:output-to     "test/resources/_compiled/tests-advanced/build.js"
+                                                   :output-dir    "test/resources/_compiled/tests-advanced"
+                                                   :asset-path    "_compiled/tests-advanced"
+                                                   :main          zones.main
+                                                   :optimizations :advanced}}}}}
+
              :auto-testing
              {:cljsbuild {:builds {:tests
                                    {:notify-command ["phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]}}}}}
 
 
-  :aliases {"test"       ["do"
-                          "clean,"
-                          "test-tests,"]
-            "test-tests" ["do"
-                          "with-profile" "+testing" "cljsbuild" "once" "tests,"
-                          "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]
-            "auto-test"  ["do"
-                          "clean,"
-                          "with-profile" "+testing,+auto-testing" "cljsbuild" "auto" "tests"]
-            "release"    ["do"
-                          "shell" "scripts/check-versions.sh,"
-                          "clean,"
-                          "test,"
-                          "jar,"
-                          "shell" "scripts/check-release.sh,"
-                          "deploy" "clojars"]})
+  :aliases {"test"                ["do"
+                                   "clean,"
+                                   "test-tests,"
+                                   "test-tests-advanced,"]
+            "test-tests"          ["do"
+                                   "with-profile" "+testing" "cljsbuild" "once" "tests,"
+                                   "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]
+            "test-tests-advanced" ["do"
+                                   "with-profile" "+testing-advanced" "cljsbuild" "once" "tests,"
+                                   "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests-advanced.html"]
+            "auto-test"           ["do"
+                                   "clean,"
+                                   "with-profile" "+testing,+auto-testing" "cljsbuild" "auto" "tests"]
+            "release"             ["do"
+                                   "shell" "scripts/check-versions.sh,"
+                                   "clean,"
+                                   "test,"
+                                   "jar,"
+                                   "shell" "scripts/check-release.sh,"
+                                   "deploy" "clojars"]})
