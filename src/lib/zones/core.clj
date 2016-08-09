@@ -1,4 +1,5 @@
 (ns zones.core
+  (:require [zones.core-fn :refer [default-zone]])
   (:refer-clojure :exclude [binding bound-fn bound-fn* get set]))
 
 ; note: ES2015 only due to Object.create, can be ported to ES3

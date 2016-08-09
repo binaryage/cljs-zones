@@ -1,2 +1,2 @@
 (ns zones.main
-  (:require [zones.core]))
+  (:require [zones.core-fn]))
