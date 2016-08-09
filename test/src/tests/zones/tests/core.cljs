@@ -1,7 +1,7 @@
 (ns zones.tests.core
-  (:refer-clojure :exclude [binding get set])
+  (:refer-clojure :exclude [binding get])
   (:require [cljs.test :refer-macros [async deftest testing is use-fixtures]]
-            [zones.core :as zones :refer-macros [binding get set bound-fn* bound-fn]]
+            [zones.core :as zones :refer-macros [binding get set! bound-fn* bound-fn]]
             [zones.tests.helpers :refer [print-default-zone]]))
 
 ; -- T0 ---------------------------------------------------------------------------------------------------------------------
@@ -47,9 +47,9 @@
 ; -- T2 ---------------------------------------------------------------------------------------------------------------------
 
 (defn test2-async-fn1 []
-  (print-default-zone "test2-async-fn1: before set")
-  (set x 100)
-  (print-default-zone "test2-async-fn1: after set"))
+  (print-default-zone "test2-async-fn1: before set!")
+  (zones/set! x 100)
+  (print-default-zone "test2-async-fn1: after set!"))
 
 (defn test2-async-fn2 []
   (print-default-zone "test2-async-fn2"))

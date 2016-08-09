@@ -32,7 +32,7 @@
 (defmacro zone-get [zone name]
   `(goog.object/get ~zone ~(munge-name name)))
 
-(defmacro zone-set [zone name val]
+(defmacro zone-set! [zone name val]
   `(goog.object/set ~zone ~(munge-name name) ~val))
 
 (defmacro zone-bound-fn* [zone f]
@@ -56,8 +56,8 @@
 (defmacro get [name]
   `(zone-get ~'zones.core/default-zone ~name))
 
-(defmacro set [name val]
-  `(zone-set ~'zones.core/default-zone ~name ~val))
+(defmacro set! [name val]
+  `(zone-set! ~'zones.core/default-zone ~name ~val))
 
 (defmacro bound-fn* [f]
   `(zone-bound-fn* ~'zones.core/default-zone ~f))
