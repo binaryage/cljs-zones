@@ -113,3 +113,46 @@
     (async done
       (test2)
       (js/setTimeout done 1000))))
+
+; -- T3 ---------------------------------------------------------------------------------------------------------------------
+
+(defn test3-async-fn1 []
+  (print-default-zone "test3-async-fn1: before set!")
+  (is (= (get x) 1))
+  (zones/set! x 100)
+  (print-default-zone "test3-async-fn1: after set!")
+  (is (= (get x) 100)))
+
+(defn test3-async-fn2 []
+  (print-default-zone "test3-async-fn2")
+  (is (= (get x) 100)))
+
+(defn test3-async-fn3 []
+  (print-default-zone "test3-async-fn3: before set!")
+  (is (= (get x) 1000))
+  (zones/set! x 1001)
+  (print-default-zone "test3-async-fn3: after set!")
+  (is (= (get x) 1001)))
+
+(defn test3-async-fn4 []
+  (print-default-zone "test3-async-fn4")
+  (is (= (get x) 1001)))
+
+(defn test3 []
+  (is (= (get x) nil))
+  (binding [x 1]
+    (print-default-zone "test3: inside binding-1")
+    (is (= (get x) 1))
+    (js/setTimeout (bound-fn* test3-async-fn1) 200)
+    (js/setTimeout (bound-fn* test3-async-fn2) 400))
+  (binding [x 1000]
+    (print-default-zone "test3: inside binding-1-2")
+    (js/setTimeout (bound-fn* test3-async-fn3) 300)
+    (js/setTimeout (bound-fn* test3-async-fn4) 600))
+  (is (= (get x) nil)))
+
+(deftest T3
+  (testing "two parallel binding frames with mixed async calls and set!"
+    (async done
+      (test3)
+      (js/setTimeout done 1000))))
