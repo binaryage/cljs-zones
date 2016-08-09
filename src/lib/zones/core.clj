@@ -1,5 +1,4 @@
 (ns zones.core
-  (:require [zones.core-fn :refer [default-zone]])
   (:refer-clojure :exclude [binding bound-fn bound-fn* get set]))
 
 ; note: ES2015 only due to Object.create, can be ported to ES3
@@ -52,16 +51,16 @@
 ; ---------------------------------------------------------------------------------------------------------------------------
 
 (defmacro binding [bindings & body]
-  `(zone-binding default-zone ~bindings ~@body))
+  `(zone-binding ~'zones.core/default-zone ~bindings ~@body))
 
 (defmacro get [name]
-  `(zone-get default-zone ~name))
+  `(zone-get ~'zones.core/default-zone ~name))
 
 (defmacro set [name val]
-  `(zone-set default-zone ~name ~val))
+  `(zone-set ~'zones.core/default-zone ~name ~val))
 
 (defmacro bound-fn* [f]
-  `(zone-bound-fn* default-zone ~f))
+  `(zone-bound-fn* ~'zones.core/default-zone ~f))
 
 (defmacro bound-fn [& fntail]
-  `(zone-bound-fn default-zone ~@fntail))
+  `(zone-bound-fn ~'zones.core/default-zone ~@fntail))

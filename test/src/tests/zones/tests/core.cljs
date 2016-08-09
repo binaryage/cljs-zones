@@ -1,17 +1,12 @@
 (ns zones.tests.core
   (:refer-clojure :exclude [binding get set])
   (:require [cljs.test :refer-macros [async deftest testing is use-fixtures]]
-            [zones.core-fn :refer [make-zone default-zone]])
-  (:require-macros
-            [zones.core :refer [binding get set bound-fn* bound-fn]]))
+            [zones.core :as zones :refer-macros [binding get set bound-fn* bound-fn]]))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
-(defn default-zone-str []
-  (pr-str default-zone))
-
 (defn print-default-zone [& args]
-  (apply print (concat args [": " (default-zone-str)])))
+  (apply print (concat args [": " zones/default-zone])))
 
 ; -- T0 ---------------------------------------------------------------------------------------------------------------------
 
