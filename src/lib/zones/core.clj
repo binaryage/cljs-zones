@@ -1,6 +1,8 @@
 (ns zones.core
   (:refer-clojure :exclude [binding bound-fn bound-fn* get]))
 
+(def current-version "0.1.0-SNAPSHOT")                                                                                        ; this should match our project.clj
+
 (defn read-config []
   (if cljs.env/*compiler*
     (get-in @cljs.env/*compiler* [:options :external-config :zones/config])))                                                 ; https://github.com/bhauman/lein-figwheel/commit/80f7306bf5e6bd1330287a6f3cc259ff645d899b
@@ -62,6 +64,9 @@
     (gen-create-object-ES3 proto bindings)))
 
 ; -- aux macros -------------------------------------------------------------------------------------------------------------
+
+(defmacro get-current-version []
+  current-version)
 
 (defmacro get-compilation-mode []
   (config-compilation-mode))

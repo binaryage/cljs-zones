@@ -13,7 +13,7 @@ pushd .
 cd "$(dirname "${BASH_SOURCE[0]}")"; cd ..
 
 ROOT=`pwd`
-PROJECT_VERSION_FILE="src/lib/zones/version.clj"
+PROJECT_VERSION_FILE="src/lib/zones/core.clj"
 PROJECT_FILE="project.clj"
 
 popd

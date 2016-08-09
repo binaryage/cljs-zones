@@ -1,8 +1,10 @@
 (ns zones.core
-  (:require-macros [zones.core :refer [get-prototype make-zone]])
+  (:require-macros [zones.core :refer [get-prototype make-zone get-current-version]])
   (:require [goog.object]))
 
 (def ^:dynamic default-zone (make-zone))
+
+(def version (get-current-version))
 
 ; -- macro apis -------------------------------------------------------------------------------------------------------------
 
