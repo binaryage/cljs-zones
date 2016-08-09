@@ -3,7 +3,6 @@
 [![GitHub license](https://img.shields.io/github/license/binaryage/cljs-zones.svg)](license.txt) 
 [![Clojars Project](https://img.shields.io/clojars/v/binaryage/zones.svg)](https://clojars.org/binaryage/zones) 
 [![Travis](https://img.shields.io/travis/binaryage/cljs-zones.svg)](https://travis-ci.org/binaryage/cljs-zones) 
-[![Sample Project](https://img.shields.io/badge/project-example-ff69b4.svg)](https://github.com/binaryage/cljs-zones-sample)
 
 Magical `binding` macro which survives async calls (with the help of `bound-fn`). 
 
@@ -13,27 +12,23 @@ Example
 
 ```clojure
 (ns zones.test
-  (:refer-clojure :exclude [binding])
-  (:require [zones.core :refer-macros [binding bound-fn] :refer [default-zone]]))
+  (:require [zones.core :as zones :include-macros true]))
   
-(defn print-default-zone [prefix]
-  (println (str prefix ": " (pr-str default-zone))))
-            
-(print-default-zone "before")
-(binding [v "I'm a dynamically bound value in default zone"]
-  (print-default-zone "inside")
-  (js/setTimeout (bound-fn [] (print-default-zone "in async call")) 500))
-(print-default-zone "after")
-(println "main done")
+(println "before:" (zones/get v))
+(zones/binding [v "I'm a dynamically bound value in the default zone"]
+  (println "inside:" (zones/get v))
+  (js/setTimeout (zones/bound-fn [] (println "in async call:" (zones/get v))) 500))
+(println "after:" (zones/get v))
+
 ```
 
 Prints:
 
 ```
-before:  #js {}
-inside:  #js {:v "I'm a dynamically bound value in default zone"}
-after:  #js {}
-in async call:  #js {:v "I'm a dynamically bound value in default zone"}
+before: nil
+inside: I'm a dynamically bound value in the default zone
+after: nil
+in async call: I'm a dynamically bound value in the default zone
 ```
 
 You can play with an example in your browser [with klipse][1].
