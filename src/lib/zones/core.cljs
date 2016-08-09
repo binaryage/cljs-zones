@@ -1,10 +1,10 @@
 (ns zones.core
-  (:require-macros [zones.core :refer [get-prototype]])
+  (:require-macros [zones.core :refer [get-prototype make-zone]])
   (:require [goog.object]))
 
-(defn make-zone
-  ([] (js-obj))
-  ([init] init))
+(def ^:dynamic default-zone (make-zone))
+
+; -- macro apis -------------------------------------------------------------------------------------------------------------
 
 (defn prototype-with-own-property [o name]
   (if (some? o)
@@ -16,5 +16,3 @@
   (let [selected-prototype (prototype-with-own-property o name)
         effective-target (or selected-prototype o)]
     (goog.object/set effective-target name val)))
-
-(def ^:dynamic default-zone (make-zone))

@@ -60,6 +60,10 @@
 
 ; -- general zone operations ------------------------------------------------------------------------------------------------
 
+(defmacro make-zone
+  ([] (gen-bindings-obj []))
+  ([bindings] (gen-bindings-obj bindings)))
+
 (defmacro zone-binding [zone bindings & body]
   `(let [prev-zone# ~zone
          new-zone# ~(gen-create-object zone bindings)]
