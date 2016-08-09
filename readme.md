@@ -9,8 +9,7 @@ Magical `binding` which survives async calls (with the help of `bound-fn`).
 
 ### Documentation
 
-
-You can test it in your browser [with klipse](http://app.klipse.tech/?cljs_in.gist=viebel/ee6f2e662c82edb7070068f1186c9e4d&external-libs=[https://raw.githubusercontent.com/viebel/cljs-zones/master/src/lib]).
+You can test it in your browser [with klipse][1].
 
 If you want to test it locally, just do the following:
 
@@ -54,3 +53,5 @@ in async call :  #js {:v "I'm a dynamically bound value in default zone"}
 ```
 
 For more info see [full tests](test/src/tests/zones/tests/core.cljs) and [Travis output](https://travis-ci.org/binaryage/cljs-zones).
+
+[1]: http://app.klipse.tech/?cljs_in.gist=darwin/0de5c18d636d2c1db7b07d3500de51a0&external-libs=%5Bhttps://raw.githubusercontent.com/binaryage/cljs-zones/1089500c677513241b71b1ca1b73566f412eb3ec/src/lib%5D
