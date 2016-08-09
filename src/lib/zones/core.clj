@@ -1,7 +1,7 @@
 (ns zones.core
   (:refer-clojure :exclude [binding bound-fn bound-fn* get]))
 
-(def current-version "0.1.0")                                                                                                 ; this should match our project.clj
+(def current-version "0.1.1-SNAPSHOT")                                                                                        ; this should match our project.clj
 
 (defn read-config []
   (if cljs.env/*compiler*

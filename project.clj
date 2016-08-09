@@ -1,4 +1,4 @@
-(defproject binaryage/zones "0.1.0"
+(defproject binaryage/zones "0.1.1-SNAPSHOT"
   :description "Async-aware binding & bound-fn."
   :url "https://github.com/binaryage/cljs-zones"
   :license {:name         "MIT License"
