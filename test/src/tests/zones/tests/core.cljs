@@ -1,7 +1,9 @@
 (ns zones.tests.core
   (:refer-clojure :exclude [binding get set])
   (:require [cljs.test :refer-macros [async deftest testing is use-fixtures]]
-            [zones.core :refer-macros [binding get set bound-fn* bound-fn] :refer [make-zone default-zone]]))
+            [zones.core-fn :refer [make-zone default-zone]])
+  (:require-macros
+            [zones.core :refer [binding get set bound-fn* bound-fn]]))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
