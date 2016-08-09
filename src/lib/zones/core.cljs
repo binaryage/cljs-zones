@@ -1,4 +1,5 @@
 (ns zones.core
+  (:require-macros [zones.core :refer [get-prototype]])
   (:require [goog.object]))
 
 (defn make-zone
@@ -9,7 +10,7 @@
   (if (some? o)
     (if (.hasOwnProperty o name)
       o
-      (recur (.getPrototypeOf js/Object o) name))))
+      (recur (get-prototype o) name))))
 
 (defn prototype-aware-set! [o name val]
   (let [selected-prototype (prototype-with-own-property o name)

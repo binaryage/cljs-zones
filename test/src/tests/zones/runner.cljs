@@ -1,5 +1,6 @@
 (ns zones.runner
   (:require [cljs.test :as test :refer-macros [run-tests] :refer [report]]
+            [zones.core :refer-macros [get-compilation-mode]]
             [zones.tests.core]))
 
 (enable-console-print!)
@@ -20,5 +21,6 @@
     (cljs.test/empty-env ::test/default)
     'zones.tests.core))
 
+(println (str "Code compiled in " (get-compilation-mode) " mode"))
 (case (.-selectedTestSuite js/window)
   (run-normal-tests))
