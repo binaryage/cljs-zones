@@ -180,6 +180,29 @@ reordered and rewritten. And naturally you can extract only linear parts of the 
   
 This is an area of my future research. Ideas welcome!
 
+> Can we emit bound-fn automatically?
+
+At run-time or compile time?
+
+Ad compile-time:
+
+I don't think this is possible. Compiler cannot see if a given function will be used in async context or more specifically 
+if any code executed directly or called asynchronously will want to look at vars in the zone.
+
+Ad run-time:
+
+Angular people did (optional) [runtime wrapping with zone.js][8]. They wrap all known async functions in Javascript environment at launch time.
+This way they can dynamically wrap each callback in the system with their version of `bound-fn` if needed.
+ 
+I think wrapping all async APIs at runtime is too extreme. I think for ClojureScript purposes it would be enough to make core.async
+cooperate and give library/framework authors a nice way how to support `bound-fn` inside their implementations.
+ 
+ClojureScript app-developer should be aware how bound-fn works but should not be required to deal with it 
+when using zones-aware ClojureScript libraries for async ops.
+
+Maybe we could implement some extra logic in `bound-fn` to prevent multiple wrapping with the same call-site-zone, for
+cases when people defensively wrap already wrapped functions passed to them.
+
 [1]: http://app.klipse.tech/?cljs_in.gist=darwin/1e31b0c33f1ca0e6e0e475b51f95b424&external-libs=%5Bhttps://raw.githubusercontent.com/binaryage/cljs-zones/v0.1.0/src/lib%5D
 [2]: https://gist.github.com/whilo/a8ef2cd3f0e033d3973880a2001be32a
 [3]: https://github.com/angular/zone.js
@@ -187,3 +210,4 @@ This is an area of my future research. Ideas welcome!
 [5]: https://clojuredocs.org/clojure.core/binding
 [6]: https://clojuredocs.org/clojure.core/bound-fn
 [7]: http://cljs.github.io/api/cljs.core/#binding
+[8]: https://github.com/angular/zone.js/blob/571a4c771435eea82e35cd0a526917c23288e8ae/lib/zone.ts#L25-L52
