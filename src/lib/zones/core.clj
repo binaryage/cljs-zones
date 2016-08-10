@@ -54,9 +54,10 @@
   `(.create js/Object ~proto ~(gen-bindings-props bindings)))
 
 (defn gen-new-zone-ES3 [proto bindings]
-  `(let [newborn-zone# ~(gen-bindings-obj bindings)]
-     (set! (.. newborn-zone# -__proto__) ~proto)
-     newborn-zone#))
+  (let [newborn-zone-sym (gensym "newborn-zone-")]
+    `(let [~newborn-zone-sym ~(gen-bindings-obj bindings)]
+       (set! (.. ~newborn-zone-sym -__proto__) ~proto)
+       ~newborn-zone-sym)))
 
 (defn gen-new-zone [proto bindings]
   (if (compile-as-ES2015?)
@@ -81,12 +82,13 @@
 ; -- general zone operations ------------------------------------------------------------------------------------------------
 
 (defmacro zone-binding [zone bindings & body]
-  `(let [prev-zone# ~zone]
-     (set! ~zone ~(gen-new-zone zone bindings))
-     (try
-       ~@body
-       (finally
-         (set! ~zone prev-zone#)))))
+  (let [outer-zone-sym (gensym "outer-zone-")]
+    `(let [~outer-zone-sym ~zone]
+       (set! ~zone ~(gen-new-zone zone bindings))
+       (try
+         ~@body
+         (finally
+           (set! ~zone ~outer-zone-sym))))))
 
 (defmacro zone-get [zone name]
   `(goog.object/get ~zone ~(munge-name name)))
@@ -95,18 +97,21 @@
   `(zones.core/prototype-aware-set! ~zone ~(munge-name name) ~val))
 
 (defmacro zone-bound-fn* [zone f]
-  `(let [lexical-zone# ~zone]
-     (fn []
-       (let [active-zone# ~zone]
-         (set! ~zone lexical-zone#)
-         (try
-           ; note we use js-interop here because it leads to simpler generated code
-           ; using (fn [& args#]... (apply ~f args#) ...) would be more idiomatic version
-           ; but it would generate some busy-work code which would not go away even under :advanced optimizations
-           ; (as of clojurescript 1.9.89)
-           (.apply ~f nil (cljs.core/js-arguments))
-           (finally
-             (set! ~zone active-zone#)))))))
+  (let [call-site-zone-sym (gensym "call-site-zone-")
+        active-zone-sym (gensym "active-zone-")
+        bound-fn-name-sym (symbol (str "fn-bound-to-" call-site-zone-sym))]
+    `(let [~call-site-zone-sym ~zone]
+       (fn ~bound-fn-name-sym []
+         (let [~active-zone-sym ~zone]
+           (set! ~zone ~call-site-zone-sym)
+           (try
+             ; note we use js-interop here because it leads to simpler generated code
+             ; using (fn [& args#]... (apply ~f args#) ...) would be more idiomatic version
+             ; but it would generate some busy-work code which would not go away even under :advanced optimizations
+             ; (as of clojurescript 1.9.89)
+             (.apply ~f nil (cljs.core/js-arguments))
+             (finally
+               (set! ~zone ~active-zone-sym))))))))
 
 (defmacro zone-bound-fn [zone & fntail]
   `(zone-bound-fn* ~zone (fn ~@fntail)))
