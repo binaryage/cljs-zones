@@ -129,16 +129,16 @@ With this in place, we can now implement `bound-fn`.
      3. call `f` with applied arguments from `g`
      4. set currently active zone to be `last-active-zone`
      
-As you can see, the implementation the wrapping is cheap. We are just juggling around pointers to bags which should be fast, 
-because we are not creating new javascript objects on each invocation. Additionally during binding frame creation 
+As you can see, this implementation of wrapping is cheap. We are just juggling around pointers to bags which should be fast, 
+because we are not creating new javascript objects on each invocation. Additionally during a new binding frame creation 
 we pay only for newly re-bound "vars", not all existing dynamic "vars". Dynamics "var" lookup is cheap as well because 
-it uses normal object property access and Javascript engine has to walk protype chain if needed.
+it boils down to normal object property access and that's Javascript job. Javascript engines are good at walking protype chains.
 
 > Nice, so we can track multiple zones if needed?
 
-Good catch! Yes, cljs-zones provides simplified API which implicitly works with `default-zone` for your convenience. 
-But you can create your own zones and use them for different purposes. E.g. I could imagine you could solve performance 
-issues by splitting your `default-zone` if it got too big or deep.
+Good catch! Yes, cljs-zones provides a simplified API which implicitly works with `default-zone` for your convenience. 
+But you can create your own zones and use them for different purposes. E.g. I could imagine you could gain some performance 
+by splitting your `default-zone` if it got too big or deep.
   
 > Is it compatible with ancient ECMAScript 3 Javascript engines?
 
@@ -148,34 +148,35 @@ Yes.
 
 I believe, yes.
 
-ClojureScript compiler could introduce a new meta to mark vars as being in `:zone`. You could set it to `true` 
-for internal default zone, or you could set it to some other `:dynamic` var acting as custom zone.
+ClojureScript compiler could introduce a new meta to mark vars as being in the `:zone`. You could set it to `true` 
+for internal default zone, or you could set it to some other :dynamic var acting as a custom zone.
 
-Analyzer would be smarter about `:zone` vars. It would mark zone var usage to:
+Analyzer would be aware of `:zone` vars. It would mark zone var sites to:
 
   1. emit `zones/get` for each read requests. 
   2. emit `zones/set` for each write request.
-  3. each `binding` macro would split into regular `binding` and `zones/binding` if there were mixed plain `:dynamic` and `:zone` vars
+  3. `binding` macro would merge functionality of regular `binding` and `zones/binding` (you could mix plain `:dynamic` and `:zone` vars there)
 
 > What about code accessing :zone vars directly via js-interop?
 
-Access via namespace would not be supported for `:zone` vars. People must be aware that they must go through zone if really needed. 
+Access via namespace would not be supported for `:zone` vars (they are not sitting there). 
+People must be aware that they must go through zone for js-interop. 
 
-For backward compatibility with legacy code switched from `:dynamic` to `:zone` we could implement a macro which would
+For backward compatibility with legacy code we could implement a macro which would
 generate ES2015 getters and setters to polyfil it. But I think it would be better not to encourage its usage.
 
 > Does it work with core.async?
 
 Yes and no. 
 
-Please note that the code you wrap in `go` macro gets chopped into smaller chunks broken on async-call boundaries. 
+Please note that the code you wrap in `go` macro gets chopped into smaller chunks cut on async-call boundaries. 
 Core.async then runs a small state machine executing those chunks in right order and storing/restoring machine state between async calls.
 
 Ideally we would like to wrap those code chunks in our `bound-fn` but that is not conveniently possible AFAIK (help needed!).
 What you can do today is to capture the "call-site-zone" immediately before entering go block. And then extract your 
-go-block code into functions which get call-site-zone as a parameter. Inside you can store/restore call-site-zone similar
+go-block code into functions which receive call-site-zone as a parameter. Inside you can store/restore call-site-zone similar
 to our bound-fn implementation. Please note that you cannot do this inside `go` block body itself - your code there will be
-reordered and rewritten. And naturally you can extract only parts of the code without async calls in them.
+reordered and rewritten. And naturally you can extract only linear parts of the code without async calls in them.
   
 This is an area of my future research. Ideas welcome!
 
