@@ -81,7 +81,7 @@ The name cljs-zones was inspired by [Angular's zone.js][3]. See [their presentat
 
 > Why do we need this in ClojureScript?
  
-Clojure has `binding` and `bound-fn`, but ClojureScript has just `binding`. 
+Clojure has [`binding`][5] and [`bound-fn`][6], but ClojureScript has just [`binding`][7]. 
 Why? The simple reasoning is: Clojure has threads, but ClojureScript does not. 
 
 But wait! Standard `binding` macro cannot be safely used across async call boundaries. 
@@ -93,7 +93,7 @@ But we did not know how to implement it in a nice and performant way. Until now 
 
 > Isn't this slow?
 
-No.
+No, I believe (benchmarks needed).
 
 > What is the trick?
 
@@ -184,3 +184,6 @@ This is an area of my future research. Ideas welcome!
 [2]: https://gist.github.com/whilo/a8ef2cd3f0e033d3973880a2001be32a
 [3]: https://github.com/angular/zone.js
 [4]: https://www.youtube.com/watch?v=3IqtmUscE_U
+[5]: https://clojuredocs.org/clojure.core/binding
+[6]: https://clojuredocs.org/clojure.core/bound-fn
+[7]: http://cljs.github.io/api/cljs.core/#binding
