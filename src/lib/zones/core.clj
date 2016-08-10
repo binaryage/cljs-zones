@@ -50,18 +50,18 @@
     (gen-get-prototype-ES2015 o)
     (gen-get-prototype-ES3 o)))
 
-(defn gen-create-object-ES2015 [proto bindings]
+(defn gen-new-zone-ES2015 [proto bindings]
   `(.create js/Object ~proto ~(gen-bindings-props bindings)))
 
-(defn gen-create-object-ES3 [proto bindings]
-  `(let [obj# ~(gen-bindings-obj bindings)]
-     (set! (.. obj# -__proto__) ~proto)
-     obj#))
+(defn gen-new-zone-ES3 [proto bindings]
+  `(let [newborn-zone# ~(gen-bindings-obj bindings)]
+     (set! (.. newborn-zone# -__proto__) ~proto)
+     newborn-zone#))
 
-(defn gen-create-object [proto bindings]
+(defn gen-new-zone [proto bindings]
   (if (compile-as-ES2015?)
-    (gen-create-object-ES2015 proto bindings)
-    (gen-create-object-ES3 proto bindings)))
+    (gen-new-zone-ES2015 proto bindings)
+    (gen-new-zone-ES3 proto bindings)))
 
 ; -- aux macros -------------------------------------------------------------------------------------------------------------
 
@@ -81,9 +81,8 @@
 ; -- general zone operations ------------------------------------------------------------------------------------------------
 
 (defmacro zone-binding [zone bindings & body]
-  `(let [prev-zone# ~zone
-         new-zone# ~(gen-create-object zone bindings)]
-     (set! ~zone new-zone#)
+  `(let [prev-zone# ~zone]
+     (set! ~zone ~(gen-new-zone zone bindings))
      (try
        ~@body
        (finally
