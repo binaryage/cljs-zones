@@ -98,11 +98,11 @@
 
 (defmacro zone-bound-fn* [zone f]
   (let [call-site-zone-sym (gensym "call-site-zone-")
-        active-zone-sym (gensym "active-zone-")
+        last-active-zone-sym (gensym "last-active-zone-")
         bound-fn-name-sym (symbol (str "fn-bound-to-" call-site-zone-sym))]
     `(let [~call-site-zone-sym ~zone]
        (fn ~bound-fn-name-sym []
-         (let [~active-zone-sym ~zone]
+         (let [~last-active-zone-sym ~zone]
            (set! ~zone ~call-site-zone-sym)
            (try
              ; note we use js-interop here because it leads to simpler generated code
@@ -111,7 +111,7 @@
              ; (as of clojurescript 1.9.89)
              (.apply ~f nil (cljs.core/js-arguments))
              (finally
-               (set! ~zone ~active-zone-sym))))))))
+               (set! ~zone ~last-active-zone-sym))))))))
 
 (defmacro zone-bound-fn [zone & fntail]
   `(zone-bound-fn* ~zone (fn ~@fntail)))
