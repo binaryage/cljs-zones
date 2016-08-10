@@ -203,7 +203,7 @@ when using zones-aware ClojureScript libraries for async ops.
 Maybe we could implement some extra logic in `bound-fn` to prevent multiple wrapping with the same call-site-zone, for
 cases when people defensively wrap already wrapped functions passed to them.
 
-[1]: http://app.klipse.tech/?cljs_in.gist=darwin/1e31b0c33f1ca0e6e0e475b51f95b424&external-libs=%5Bhttps://raw.githubusercontent.com/binaryage/cljs-zones/v0.1.0/src/lib%5D
+[1]: http://app.klipse.tech/?cljs_in.gist=darwin/1e31b0c33f1ca0e6e0e475b51f95b424&external-libs=%5Bhttps://raw.githubusercontent.com/binaryage/cljs-zones/master/src/lib%5D
 [2]: https://gist.github.com/whilo/a8ef2cd3f0e033d3973880a2001be32a
 [3]: https://github.com/angular/zone.js
 [4]: https://www.youtube.com/watch?v=3IqtmUscE_U
