@@ -96,11 +96,15 @@
 
 (defmacro zone-bound-fn* [zone f]
   `(let [lexical-zone# ~zone]
-     (fn [& args#]
+     (fn []
        (let [active-zone# ~zone]
          (set! ~zone lexical-zone#)
          (try
-           (apply ~f args#)
+           ; note we use js-interop here because it leads to simpler generated code
+           ; using (fn [& args#]... (apply ~f args#) ...) would be more idiomatic version
+           ; but it would generate some busy-work code which would not go away even under :advanced optimizations
+           ; (as of clojurescript 1.9.89)
+           (.apply ~f nil (cljs.core/js-arguments))
            (finally
              (set! ~zone active-zone#)))))))
 
