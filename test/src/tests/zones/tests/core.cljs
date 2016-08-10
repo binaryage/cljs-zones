@@ -1,6 +1,6 @@
 (ns zones.tests.core
   (:refer-clojure :exclude [binding get])
-  (:require [cljs.test :refer-macros [async deftest testing is use-fixtures]]
+  (:require [cljs.test :refer-macros [async deftest testing is are]]
             [zones.core :as zones :refer-macros [binding get set! bound-fn* bound-fn]]
             [zones.tests.helpers :refer [print-default-zone]]))
 
@@ -205,3 +205,18 @@
     (async done
       (test4)
       (js/setTimeout done 1000))))
+
+; -- T5 ---------------------------------------------------------------------------------------------------------------------
+
+(deftest T5
+  (testing "make sure bound-fn passes arguments through"
+    (let [bound-fn1 (zones/bound-fn* (fn [p1 p2 & rest]
+                       (are [p expected] (= p expected)
+                         p1 1
+                         p2 2
+                         rest '("rest" "values"))))
+          generic-bound-fn (zones/bound-fn [& args] args)]
+      (bound-fn1 1 2 "rest" "values")
+      (is (= (generic-bound-fn) nil))
+      (is (= (generic-bound-fn 1) '(1)))
+      (is (= (generic-bound-fn 1 2 3 4 5 6) '(1 2 3 4 5 6))))))
