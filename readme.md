@@ -82,7 +82,8 @@ The name cljs-zones was inspired by [Angular's zone.js][3]. See [their presentat
 > Why do we need this in ClojureScript?
  
 Clojure has [`binding`][5] and [`bound-fn`][6], but ClojureScript has just [`binding`][7]. 
-Why? The simple reasoning is: Clojure has threads, but ClojureScript does not. 
+Why? Clojure has threads and [vars](https://clojure.org/reference/vars), but ClojureScript does not. 
+See some older [design discussion here](http://dev.clojure.org/display/design/Dynamic+Binding). 
 
 But wait! Standard `binding` macro cannot be safely used across async call boundaries. 
 ClojureScript is Javascript and it has asynchronous callbacks all over the place. 
