@@ -1,7 +1,9 @@
+sudo: true
+dist: trusty
 language: clojure
-
-before_script:
-  - mkdir travis-phantomjs
-  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
-  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
-  - export PATH=$PWD/travis-phantomjs:$PATH
+notifications:
+  email:
+  - antonin@hildebrand.cz
+  hipchat:
+    rooms:
+      secure: nFdVeQ0+dqAhA9Yuk/KmI/JRSPkJsnB082O4Bb7zqVARycCPXiD1HhSJUSZYy26Lk+17mELF3us7vAwvPhZ+zqJPlJ0V035QfmfD5pgG++JeSGEEOK9/2fALDBPiYNDwvvVYxSnCuZp0uMjzDGts4C7HXUsbLs3ex3DaRWyNojeCvAdUzNFBXdVtkbZYUyuMKIBkVoKD1ZGu/y51YLLAXFnQ1xQKyUp8kKMydfHTwiSE7fEptiIkkeNmluKRz93Pw7aUdwf/XvgxTu14BX9su+1XwdheZPhiBXZzL2OQx13QJBgnXi9PrbVMS7B+w3irs0lZmeZt63k/6+c6SxclR4XwFsSNAUMT5uA1WRQtCCD9wTF8+5WHRWEpHryNNMX/5VIDN4YVmQYrJPuVix1dabypLOuzgcnZnOMHMPqRqQaGDAQjBF2jRFd1jSuU1wLXmn82UKPJNCP/Yhlp584pQA+x9xqRBq8Pp6B3W66z0U4kjMlf+d+HrjXPhe77XdhdQSDO1+nWvcNbofqDSmuSQ/Hr/3z/AVJKS22R9e2Wye5H7Bim0qclMRyPpPTiiIVLGir0uduaL4/HEOjvPaQx7RwovezC786ty0j2vJWwAAHnxrjAFMUn0GxnbCxmWUz89i+PzU3cRvtwwStVOALW7sRU3lqBLneMezvb97CUiH8=
