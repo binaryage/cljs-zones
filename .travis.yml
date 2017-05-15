@@ -6,7 +6,7 @@ notifications:
   - antonin@hildebrand.cz
   hipchat:
     rooms:
-      secure: nFdVeQ0+dqAhA9Yuk/KmI/JRSPkJsnB082O4Bb7zqVARycCPXiD1HhSJUSZYy26Lk+17mELF3us7vAwvPhZ+zqJPlJ0V035QfmfD5pgG++JeSGEEOK9/2fALDBPiYNDwvvVYxSnCuZp0uMjzDGts4C7HXUsbLs3ex3DaRWyNojeCvAdUzNFBXdVtkbZYUyuMKIBkVoKD1ZGu/y51YLLAXFnQ1xQKyUp8kKMydfHTwiSE7fEptiIkkeNmluKRz93Pw7aUdwf/XvgxTu14BX9su+1XwdheZPhiBXZzL2OQx13QJBgnXi9PrbVMS7B+w3irs0lZmeZt63k/6+c6SxclR4XwFsSNAUMT5uA1WRQtCCD9wTF8+5WHRWEpHryNNMX/5VIDN4YVmQYrJPuVix1dabypLOuzgcnZnOMHMPqRqQaGDAQjBF2jRFd1jSuU1wLXmn82UKPJNCP/Yhlp584pQA+x9xqRBq8Pp6B3W66z0U4kjMlf+d+HrjXPhe77XdhdQSDO1+nWvcNbofqDSmuSQ/Hr/3z/AVJKS22R9e2Wye5H7Bim0qclMRyPpPTiiIVLGir0uduaL4/HEOjvPaQx7RwovezC786ty0j2vJWwAAHnxrjAFMUn0GxnbCxmWUz89i+PzU3cRvtwwStVOALW7sRU3lqBLneMezvb97CUiH8=
+      secure: q/PbGoXGV88gHWxSwYp95dAY7rqprHOGKFdp2Fq1mYOE6oHuT9TvXxIhChJiDZjSreFFh8uLfBN511KPSWWGNwU34WGWzbaXu0/TyLTDj8JUu16N8loYzXCWFJfrCv7gQxyVp6GwsLkiZQiyNk5R+YlGS0aWyqE6RvKAGKGbqxI5UUpsVIGlg3PJT0rG98qc7GaLBV58tIcJHC6+Oy8XPpVq/Db7c9VldGf9iLvpXTIGaUWnrK+DWPDj6dlNgpYXM2YSX3CRqmesNwaE/HaGe/jHA4dmCEnFddG9UBEfUfdUU5hOxb1/IhoWcVFMss8EjTx5hcnRHraQl4w5Nzm80aQ0dnxZFSgNNpVVq3bO+tgBNGG5im0bVSwS35DGYmwRT/FY1BCN3a5Ty1BVV3ilmOo/aFW35yIelB8JvRqKJkgSoQwOMLQVdNtuGtbbG1Q+lm7XWEWLeaUbB1MeiQZSJg6NGn4gwwxbLaALuWEH6z5tdtfP+LAjIMlVWwm5GII/QfTB408bg23BB9QhxPM19WyMv0WXXxhm4Ybxcl+rXtRKZUywBxAxSQmBWzlG9FGD+9WrP7rLRm8dhondJ6vhL/S/e8ULaxIMNmlsG4WaIajTZ9vfwKgKEidXSKhB5BJmmKfvy77Gy0SlBFol0aqP2bftUWzRvyTHjXUf3OmuZDY=
     template:
     - '<a href="%{build_url}">%{repository}#%{build_number}</a>: %{message} (<a href="%{compare_url}">changes</a>)'
     format: html
