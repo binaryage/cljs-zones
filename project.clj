@@ -8,13 +8,13 @@
   :scm {:name "git"
         :url  "https://github.com/binaryage/cljs-zones"}
 
-  :dependencies [[org.clojure/clojure "1.8.0" :scope "provided"]
-                 [org.clojure/clojurescript "1.9.89" :scope "provided"]]
+  :dependencies [[org.clojure/clojure "1.9.0" :scope "provided"]
+                 [org.clojure/clojurescript "1.9.946" :scope "provided"]]
 
   :clean-targets ^{:protect false} ["target"
                                     "test/resources/_compiled"]
 
-  :plugins [[lein-cljsbuild "1.1.3"]
+  :plugins [[lein-cljsbuild "1.1.7"]
             [lein-shell "0.5.0"]]
 
   :source-paths ["src/lib"]
