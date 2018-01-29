@@ -19,7 +19,7 @@
 
   :source-paths ["src/lib"]
 
-  :test-paths ["test"]
+  :test-paths ["test/src/tests"]
 
   :cljsbuild {:builds {}}                                                                                                     ; prevent https://github.com/emezeske/lein-cljsbuild/issues/413
 
