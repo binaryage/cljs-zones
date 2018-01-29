@@ -1,3 +1,4 @@
+(def clojurescript-version (or (System/getenv "CANARY_CLOJURESCRIPT_VERSION") "1.9.946"))
 (defproject binaryage/zones "0.1.1-SNAPSHOT"
   :description "Async-aware binding & bound-fn."
   :url "https://github.com/binaryage/cljs-zones"
@@ -9,7 +10,7 @@
         :url  "https://github.com/binaryage/cljs-zones"}
 
   :dependencies [[org.clojure/clojure "1.9.0" :scope "provided"]
-                 [org.clojure/clojurescript "1.9.946" :scope "provided"]]
+                 [org.clojure/clojurescript ~clojurescript-version :scope "provided"]]
 
   :clean-targets ^{:protect false} ["target"
                                     "test/resources/_compiled"]

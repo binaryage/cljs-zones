@@ -4,6 +4,7 @@
             [zones.tests.core]))
 
 (enable-console-print!)
+(println "ClojureScript version:" *clojurescript-version*)
 
 ; -- entry point ------------------------------------------------------------------------------------------------------------
 

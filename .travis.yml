@@ -10,3 +10,5 @@ notifications:
     template:
     - '<a href="%{build_url}">%{repository}#%{build_number}</a>: %{message} (<a href="%{compare_url}">changes</a>)'
     format: html
+before_install:
+- curl -sSL https://raw.githubusercontent.com/cljs-oss/canary/master/scripts/install-canary.sh | bash
