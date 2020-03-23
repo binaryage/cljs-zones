@@ -6,6 +6,10 @@ notifications:
   email:
     - antonin@hildebrand.cz
 
+cache:
+  directories:
+    - $HOME/.m2
+
 before_install:
   - curl -sSL https://raw.githubusercontent.com/cljs-oss/canary/master/scripts/install-canary.sh | bash
 
