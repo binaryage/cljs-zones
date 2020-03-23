@@ -9,7 +9,7 @@
   :scm {:name "git"
         :url  "https://github.com/binaryage/cljs-zones"}
 
-  :dependencies [[org.clojure/clojure "1.9.0" :scope "provided"]
+  :dependencies [[org.clojure/clojure "1.10.1" :scope "provided"]
                  [org.clojure/clojurescript ~clojurescript-version :scope "provided"]]
 
   :clean-targets ^{:protect false} ["target"
