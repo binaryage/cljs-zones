@@ -13,7 +13,7 @@
                  [org.clojure/clojurescript ~clojurescript-version :scope "provided"]]
 
   :clean-targets ^{:protect false} ["target"
-                                    "test/resources/_compiled"]
+                                    "test/resources/.compiled"]
 
   :plugins [[lein-cljsbuild "1.1.7"]
             [lein-shell "0.5.0"]]
@@ -37,9 +37,9 @@
                      {:cljsbuild {:builds {:tests
                                            {:source-paths ["src/lib"
                                                            "test/src/tests"]
-                                            :compiler     {:output-to     "test/resources/_compiled/tests/build.js"
-                                                           :output-dir    "test/resources/_compiled/tests"
-                                                           :asset-path    "_compiled/tests"
+                                            :compiler     {:output-to     "test/resources/.compiled/tests/build.js"
+                                                           :output-dir    "test/resources/.compiled/tests"
+                                                           :asset-path    ".compiled/tests"
                                                            :main          zones.main
                                                            :optimizations :none}}}}}
 
@@ -47,9 +47,9 @@
                      {:cljsbuild {:builds {:tests
                                            {:source-paths ["src/lib"
                                                            "test/src/tests"]
-                                            :compiler     {:output-to     "test/resources/_compiled/tests-advanced/build.js"
-                                                           :output-dir    "test/resources/_compiled/tests-advanced"
-                                                           :asset-path    "_compiled/tests-advanced"
+                                            :compiler     {:output-to     "test/resources/.compiled/tests-advanced/build.js"
+                                                           :output-dir    "test/resources/.compiled/tests-advanced"
+                                                           :asset-path    ".compiled/tests-advanced"
                                                            :main          zones.main
                                                            :optimizations :advanced}}}}}
 
