@@ -16,5 +16,5 @@ before_install:
 before_script:
   # update lein to latest, https://github.com/technomancy/leiningen/issues/2014#issuecomment-153829977
   - yes y | sudo lein upgrade
-  - sudo apt-get install nodejs npm colordiff
+  - sudo apt-get install nodejs npm
   - (cd test && npm install)
