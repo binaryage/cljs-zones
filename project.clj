@@ -55,7 +55,7 @@
 
              :auto-testing
                      {:cljsbuild {:builds {:tests
-                                           {:notify-command ["phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]}}}}}
+                                           {:notify-command ["node" "test/resources/puppeteer.js" "test/resources" "run-tests.html"]}}}}}
 
 
   :aliases {"test"                       ["do"
