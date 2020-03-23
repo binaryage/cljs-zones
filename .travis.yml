@@ -1,14 +1,16 @@
 sudo: true
-dist: trusty
+dist: bionic
 language: clojure
+
 notifications:
   email:
-  - antonin@hildebrand.cz
-  hipchat:
-    rooms:
-      secure: q/PbGoXGV88gHWxSwYp95dAY7rqprHOGKFdp2Fq1mYOE6oHuT9TvXxIhChJiDZjSreFFh8uLfBN511KPSWWGNwU34WGWzbaXu0/TyLTDj8JUu16N8loYzXCWFJfrCv7gQxyVp6GwsLkiZQiyNk5R+YlGS0aWyqE6RvKAGKGbqxI5UUpsVIGlg3PJT0rG98qc7GaLBV58tIcJHC6+Oy8XPpVq/Db7c9VldGf9iLvpXTIGaUWnrK+DWPDj6dlNgpYXM2YSX3CRqmesNwaE/HaGe/jHA4dmCEnFddG9UBEfUfdUU5hOxb1/IhoWcVFMss8EjTx5hcnRHraQl4w5Nzm80aQ0dnxZFSgNNpVVq3bO+tgBNGG5im0bVSwS35DGYmwRT/FY1BCN3a5Ty1BVV3ilmOo/aFW35yIelB8JvRqKJkgSoQwOMLQVdNtuGtbbG1Q+lm7XWEWLeaUbB1MeiQZSJg6NGn4gwwxbLaALuWEH6z5tdtfP+LAjIMlVWwm5GII/QfTB408bg23BB9QhxPM19WyMv0WXXxhm4Ybxcl+rXtRKZUywBxAxSQmBWzlG9FGD+9WrP7rLRm8dhondJ6vhL/S/e8ULaxIMNmlsG4WaIajTZ9vfwKgKEidXSKhB5BJmmKfvy77Gy0SlBFol0aqP2bftUWzRvyTHjXUf3OmuZDY=
-    template:
-    - '<a href="%{build_url}">%{repository}#%{build_number}</a>: %{message} (<a href="%{compare_url}">changes</a>)'
-    format: html
+    - antonin@hildebrand.cz
+
 before_install:
-- curl -sSL https://raw.githubusercontent.com/cljs-oss/canary/master/scripts/install-canary.sh | bash
+  - curl -sSL https://raw.githubusercontent.com/cljs-oss/canary/master/scripts/install-canary.sh | bash
+
+before_script:
+  # update lein to latest, https://github.com/technomancy/leiningen/issues/2014#issuecomment-153829977
+  - yes y | sudo lein upgrade
+  - sudo apt-get install nodejs npm colordiff
+  - (cd test && npm install)

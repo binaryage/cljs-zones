@@ -68,16 +68,16 @@
                                           ]
             "test-tests"                 ["do"
                                           "with-profile" "+testing" "cljsbuild" "once" "tests,"
-                                          "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]
+                                          "shell" "node" "test/resources/puppeteer.js" "test/resources" "run-tests.html"]
             "test-tests-advanced"        ["do"
                                           "with-profile" "+testing-advanced" "cljsbuild" "once" "tests,"
-                                          "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests-advanced.html"]
+                                          "shell" "node" "test/resources/puppeteer.js" "test/resources" "run-tests-advanced.html"]
             "test-tests-es2015"          ["do"
                                           "with-profile" "+testing,+es2015" "cljsbuild" "once" "tests,"
-                                          "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests.html"]
+                                          "shell" "node" "test/resources/puppeteer.js" "test/resources" "run-tests.html"]
             "test-tests-advanced-es2015" ["do"
                                           "with-profile" "+testing-advanced,+es2015" "cljsbuild" "once" "tests,"
-                                          "shell" "phantomjs" "test/resources/phantom.js" "test/resources/run-tests-advanced.html"]
+                                          "shell" "node" "test/resources/puppeteer.js" "test/resources" "run-tests-advanced.html"]
             "auto-test"                  ["do"
                                           "clean,"
                                           "with-profile" "+testing,+auto-testing" "cljsbuild" "auto" "tests"]
