@@ -2,13 +2,14 @@
 
 # checks if all version strings are consistent
 
-set -e
+set -e -o pipefail
 
-. "$(dirname "${BASH_SOURCE[0]}")/config.sh"
+# shellcheck source=_config.sh
+source "$(dirname "${BASH_SOURCE[0]}")/_config.sh"
 
-pushd "$ROOT"
+cd "$ROOT"
 
-LEIN_VERSION=`cat "$PROJECT_FILE" | grep "defproject" | cut -d' ' -f3 | cut -d\" -f2`
+LEIN_VERSION=$(grep "defproject" <"$PROJECT_FILE" | cut -d' ' -f3 | cut -d\" -f2)
 
 JAR_FILE="target/zones-$LEIN_VERSION.jar"
 
@@ -31,5 +32,3 @@ if [[ "$REPLY" =~ ^[Yy]$ ]]; then
 else
   exit 1
 fi
-
-popd
