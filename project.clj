@@ -1,4 +1,4 @@
-(def clojurescript-version (or (System/getenv "CANARY_CLOJURESCRIPT_VERSION") "1.9.946"))
+(def clojurescript-version (or (System/getenv "CANARY_CLOJURESCRIPT_VERSION") "1.10.597"))
 (defproject binaryage/zones "0.1.1-SNAPSHOT"
   :description "Async-aware binding & bound-fn."
   :url "https://github.com/binaryage/cljs-zones"
