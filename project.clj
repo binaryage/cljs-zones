@@ -1,4 +1,4 @@
-(def clojurescript-version (or (System/getenv "CANARY_CLOJURESCRIPT_VERSION") "1.10.597"))
+(def clojurescript-version (or (System/getenv "CANARY_CLOJURESCRIPT_VERSION") "1.10.773"))
 (defproject binaryage/zones "0.1.1-SNAPSHOT"
   :description "Async-aware binding & bound-fn."
   :url "https://github.com/binaryage/cljs-zones"
@@ -15,7 +15,7 @@
   :clean-targets ^{:protect false} ["target"
                                     "test/resources/.compiled"]
 
-  :plugins [[lein-cljsbuild "1.1.7"]
+  :plugins [[lein-cljsbuild "1.1.8"]
             [lein-shell "0.5.0"]]
 
   :source-paths ["src/lib"]
